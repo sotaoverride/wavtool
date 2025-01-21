@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 		strncmp(header.subchunk1ID, "fmt ", 4) !=0 ||
 		strncmp(header.subchunk2ID, "data", 4) !=0) {
 		printf("Invalid WAVE file.\n");
-		LOG_ERROR("Invalid WAVE file %s \n",inputFileStr);
+		LOG_ERROR("Invalid WAVE file %s %s %s %s %s \n", header.chunkID, header.subchunk1ID, header.subchunk2ID, inputFileStr);
 		return 1;
 	}
 
