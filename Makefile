@@ -12,10 +12,10 @@ TARGET = $(BINDIR)/program
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-        $(CC) $(CFLAGS) $(OBJECTS) -o $@
+	$(CC) $(CFLAGS) $(OBJECTS) -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-        $(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJDIR) $(TARGET)

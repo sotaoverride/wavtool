@@ -39,7 +39,10 @@ int main(int argc, char *argv[]) {
 	}
 	struct WAVHeader header;
 	fread(&header, sizeof(header), 1, input);
-
+	header.numChannels=destChannel;
+	LOG_INFO("HEADER number of channels set to  %i \n", header.numChannels);
+//	LOG_IF_ERROR(header.numChannels != destChannel, "HEADER number of channels %i, Dest Channel  %i \n", header.numChannels, destChannel);
+	
 	//Check if WAV file is valid
 	if  (strncmp(header.chunkID, "RIFF", 4) != 0 ||
 		strncmp(header.format, "WAVE", 4) !=0 ||
@@ -71,7 +74,7 @@ int main(int argc, char *argv[]) {
 		
 		//Extract and write to the desired destination channel
 		for (int i= 0; i < bytesRead; i += frameSize){
-			fseek(output, i + (destChannel -1) * bytesPerChannel), SEEK_SET);
+			fseek(output, i + (destChannel -1) * bytesPerChannel, SEEK_SET);
 			fwrite(frame + i + (srcChannel -1) * bytesPerChannel, 1, bytesPerChannel, output);
 		}
 	}
