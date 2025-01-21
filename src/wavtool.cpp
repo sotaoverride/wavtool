@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 	fread(&header, sizeof(header), 1, input);
 	header.numChannels=destChannel;
 	LOG_INFO("HEADER number of channels set to  %i \n", header.numChannels);
-//	LOG_IF_ERROR(header.numChannels != destChannel, "HEADER number of channels %i, Dest Channel  %i \n", header.numChannels, destChannel);
+//	LOG_IF_ERROR("header.numChannels != destChannel"," HEADER number of channels %i, Dest Channel  %i \n", header.numChannels, destChannel);
 	
 	//Check if WAV file is valid
 	if  (strncmp(header.chunkID, "RIFF", 4) != 0 ||
