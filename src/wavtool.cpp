@@ -75,10 +75,8 @@ int main(int argc, char *argv[]) {
 		if (bytesRead < frameSize) break;
 
 		//Extract and write to the desired destination channel
-		for (int i=0; i< frameSizeDest; i += frameSizeDest){
-			memcpy(frameDest+i+(destChannel-1) * bytesPerChannel, frame + i + (srcChannel -1) * bytesPerChannel, bytesPerChannel);
+			memcpy(frameDest+(destChannel-1), frame + (srcChannel -1), bytesPerChannel);
 			fwrite(frameDest, frameSizeDest, 1, output);
-		}
 	}
 	fclose(input);
 	fclose(output);
