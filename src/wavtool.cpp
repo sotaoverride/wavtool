@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 	FILE *output = fopen(argv[2], "wb");
 	int srcChannel = atoi(argv[3]);
 	int destChannel = atoi(argv[4]);
-
+	int tmpSrcChannels;
 	if (!input || !output) {
 		printf("ERROR opening files \n");
 		LOG_ERROR("ERROR opening files %s \n", inputFileStr);
@@ -39,6 +39,7 @@ int main(int argc, char *argv[]) {
 	}
 	struct WAVHeader header;
 	fread(&header, sizeof(header), 1, input);
+	tmpSrcChannels = header.numChannels;
 	header.numChannels=destChannel;
 	LOG_INFO("HEADER number of channels set to  %i \n", header.numChannels);
 	LOG_IF_ERROR(header.numChannels != destChannel," HEADER number of channels %i, Dest Channel  %i \n", header.numChannels, destChannel);
@@ -64,7 +65,7 @@ int main(int argc, char *argv[]) {
 
 	//copy the specified channel from source to destination
 	int sampleSize = header.bitsPerSample / 8;
-	int frameSize = sampleSize * header.numChannels;
+	int frameSize = sampleSize * tmpSrcChannels;
 	int frameSizeDest = sampleSize * destChannel;
 	int bytesPerChannel = sampleSize;
 	while (!feof(input)) {
@@ -74,7 +75,7 @@ int main(int argc, char *argv[]) {
 		if (bytesRead < frameSize) break;
 
 		//Extract and write to the desired destination channel
-		for (int i=0; i< bytesRead; i += frameSize){
+		for (int i=0; i< frameSizeDest; i += frameSizeDest){
 			memcpy(frameDest+i+(destChannel-1) * bytesPerChannel, frame + i + (srcChannel -1) * bytesPerChannel, bytesPerChannel);
 			fwrite(frameDest, frameSizeDest, 1, output);
 		}
