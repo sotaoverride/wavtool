@@ -48,8 +48,8 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 	for (int i=0; i<argc-3; i++) {
-		LOG_IF_ERROR(atoi(argv[i+2]) > header.numChannels -1," source has %i  number of channels , source channel given for mapping  %i \n", atoi(argv[i+2]), header.numChannels );
-		chanMapping[i]=atoi(argv[i+2]); 
+		LOG_IF_ERROR(atoi(argv[i+3]) > header.numChannels -1," source has %i  number of channels , source channel given for mapping  %i \n", atoi(argv[i+3]), header.numChannels );
+		chanMapping[i]=atoi(argv[i+3]); 
 	}
 	//write header to outputfile
 	fwrite(&header, sizeof(header), 1, output);
