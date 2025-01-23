@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 	}
 	for (int i=0; i<argc-3; i++) {
 		LOG_IF_ERROR(atoi(argv[i+2]) > header.numChannels -1," source has %i  number of channels , source channel given for mapping  %i \n", atoi(argv[i+2]), header.numChannels );
-		chanMapping[i]=atoi(argv[i+2]) -1;
+		chanMapping[i]=atoi(argv[i+2]); 
 	}
 	//write header to outputfile
 	fwrite(&header, sizeof(header), 1, output);
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
 		//Extract and write to the desired destination channel
 		for(int i=0; i<argc-3; i++){
 			if (chanMapping[i]>0)
-			memcpy(frameDest + i * bytesPerChannel, frame + chanMapping[i] * bytesPerChannel, bytesPerChannel);
+			memcpy(frameDest + i * bytesPerChannel, frame + chanMapping[i] -1* bytesPerChannel, bytesPerChannel);
 		}fwrite(frameDest, frameSizeDest, 1, output);
 	}
 	fclose(input);
