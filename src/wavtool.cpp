@@ -57,11 +57,11 @@ int main(int argc, char *argv[]) {
 	//copy the specified channel from source to destination
 	int sampleSize = header.bitsPerSample / 8;
 	int frameSize = sampleSize * tmpSrcChannels;
-	int frameSizeDest = sampleSize * argc-3;
+	int frameSizeDest = sampleSize * (argc-3);
 	int bytesPerChannel = sampleSize;
 	while (!feof(input)) {
 		char frame[frameSize];
-		char frameDest[sampleSize * argc-3]={0};
+		char frameDest[sampleSize * (argc-3)]={0};
 		int bytesRead = fread(frame, 1, frameSize, input);
 		if (bytesRead < frameSize) break;
 
