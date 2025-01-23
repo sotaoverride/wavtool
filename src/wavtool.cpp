@@ -67,6 +67,7 @@ int main(int argc, char *argv[]) {
 
 		//Extract and write to the desired destination channel
 		for(int i=0; i<argc-3; i++){
+			if (chanMapping[i]>0)
 			memcpy(frameDest + i * bytesPerChannel, frame + (chanMapping[i] -1 )*bytesPerChannel, bytesPerChannel);
 		}fwrite(frameDest, frameSizeDest, 1, output);
 	}
